@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //原始值：存取作用于它自身
+    var foo = 1;
+    var bar = foo;
+
+    bar = 9;
+    console.log(foo, bar);//1,9
+
+    //复杂类型：存取作用于它自身值的引用
+    var a = [1, 2];
+    var b = a;
+
+    b[0] = 9;
+    console.log(a[0], b[0]);//9,9
+
+    //数组的扩展及常用方法
+    //浅拷贝数组
+    var arr = [1, 2, 3, 4];
+    var arrCopy;
+
+    //方法1：扩展运算符，不能拷贝多维数组
+    arrCopy = [...arr];
+
+    // console.log(arrCopy);//[1,2,3,4]
+    //修改拷贝数组，原数组不受影响
+    //  arrCopy.push(5);
+    // console.log(arrCopy);//[1,2,3,4,5]
+
+    // console.log(arr);//[1,2,3,4]
+
+    //方法二：古老方法：for循环，while循环，+slice函数
+    for (var i = 0; i < arr.length; i++) {
+        arrCopy = arr.slice()
+    }
+
+    var i;
+    while (++i < arr.length) {
+        arrCopy = arr.slice()
+    }
+
+    // console.log(arrCopy);//[1,2,3,4]
+
+    //方法三  Array.map;在使用时需要配合callback函数
+    arrCopy = arr.map((x) => x);
+    // console.log(arrCopy);//[1,2,3,4]
+
+    //也可以使用callback处理当前数组，返回你想要的结果，原数组不受影响。例如：
+    arrCopy = arr.map((item) => item * 2);
+    // console.log(arrCopy);//[2,4,6,8];
+    // console.log(arr);//[1,2,3,4]
+
+    // 方法四： Array.concat;  Array.from
+    arrCopy = arr.concat();
+    arrCopy = Array.from(arr);
+
+    // console.log(arrCopy);
+
+    //Array,from(); 将伪数组对象或可遍历对象转换为真数组，也可用于数组的浅拷贝，例子如数组浅拷贝方法四
+
+    //Array.of(a,b,c); 将一系列值转化为数组
+    console.log(Array.of(1, 2, 3));//[1,2,3]
+
+    //数组的添加、删除
+    //arr.shift(); 删除并返回数组的第一个元素
+    let arr2 = [7,8,9,10,11,12];
+    console.log(arr2.shift());//7
+
+    //arr.pop();删除并返回数组最后一个元素
+    console.log(arr2.pop());//12
+
+    //arr.unshift();在数组开头（第一个元素之前）添加一个元素，返回添加后的数组长度，
+    console.log(arr2.unshift(1));//5
+
+    //arr.concat();连接数组,不改变原数组，以新数组的形式返回,参数可以为多个数组
+    console.log(arr.concat(arr2));//[1,2,3,4,1,8,9,10,11]
+
+    //arr.join();数组转字符串,连接数组元素，返回字符串
+    console.log(arr.join());//1,2,3,4   不指定连接符默认以逗号连接
+    console.log(arr.join('-'));//1-2-3-4    指定字符连接
+
+    //字符串转数组
+    //str.split();
+    let strs = 'html css js c++ java'
+    console.log(strs.split());//['html,css,js,c++,java']    不指定切割符， 默认整个字符作为一个元素
+    console.log(strs.split(' '));//['html','css','js','c++','java']   指定空格作为切割符
+    console.log(strs.split(' ',3));//['html','css','js'];  指定数组中要保留的元素个数，不指定默认保留全部
+
+    //arr.reverse();数组反序
+    console.log(arr.reverse());//[4,3,2,1]
+   
+    // arr.sort();元素排序  原数组改变
+    let arr3 = [8,5,4,9,1]
+    console.log(arr3.sort());//[1,4,5,8,9]
+
+    //es6,字符串扩展及常用方法
+    //includes(str);判断是否包含指定的字符串，返回true或false
+    var str = 'hdfhf';
+    console.log(str.includes('a'));//false
+    console.log(str.includes('h'));//true
+
+    //startsWith(str); 判断是否以指定字符串开头,返回true或false
+    console.log(str.startsWith('b'));//false
+    console.log(str.startsWith('h'));//true
+
+    //endWith(str); 判断是否以指定字符串结束，返回布尔值
+    console.log(str.endsWith('c'));//false
+    console.log(str.endsWith('f'));//true
+
+    //repeat(count);  将字符串重复count次， count:重复次数，类型为数字
+    console.log(str.repeat(2));//hdfhfhdfhf
+
+    //indexOf();返回首次出现的位置，即下标，从前往后找，
+    console.log(str.indexOf('d')); //1
+    console.log(str.indexOf('h', 1)); //3   1为指定检索的起始位置，即下标
+
+    //lastIndexOf(); 也是返回首次出现的位置，即下标，从后往前找，与indexOf()一样，返回的都是索引（正数），未找到返回-1
+    console.log(str.lastIndexOf('d'))
+
+    //search();与indexOf作用相同，但不能指定检索位置
+    console.log(str.search('f'));//2
+
+    //截取字符串
+    //slice(start,end); 缺少end时默认提取到末尾,可以使用负数索引，ie9以下不支持
+    console.log(str.slice(1, 3));//df
+    console.log(str.slice(1, -1));//dfh
+
+    //substring(start,end); 与slice();用法，作用相同，但是不能支持负数索引
+    console.log(str.substring(0, 1));//h
+
+    //substr(start,length); length截取长度
+    console.log(str.substr(0, 4));//hdfh
+
+    //替换字符串
+    //replace();替换字符串，不改变原字符串，返回新的字符串
+    console.log(str.replace('hd', 'aa'));//aafhf
+    console.log(str.replace(/hd/i, 'AA'));//正则表达式，i不区分大小写
+    console.log(str.replace(/f/g, 'b'));//g替换所有匹配，替换所有f为b
+
+    //连接字符串
+    //str.concat();连接一个或者多个字符串，返回新字符串，不改变原串
+    console.log(str.concat('', 'js'));//hdfhfjs
+
+    //str.trim();去除字符串2端空格
+    let str2 = ' jjj ';
+    console.log(str2);// jjj   效果见控制台
+    console.log(str2.trim());//jjj
+
+    //转化大小写
+    //str.toUpperCase();小写转化为大写
+    let str3 = 'abc';
+    let str4 = 'ABC';
+    console.log(str3.toUpperCase());
+
+    //str.toLowerCase();大写转化为小写
+    console.log(str4.toLowerCase());//abc
+
+    //str.charAt();//返回指定位置上的字符
+    console.log(str3.charAt(1));//b
+
+
+    //es6,数值扩展及常用方法
+    //二进制与八进制数值表示法：二进制用0b,八进制用0o,十六进制0x;
+    //Number.isFinite(i);判断是否是有限大的数，±Infinite和NaN都为false;
+    console.log(Number.isFinite(2))//true
+
+    //Number.isNaN();//判断是否为NaN
+    console.log(Number.isNaN(1));//false
+    console.log(Number.isNaN(NaN));//true
+
+    //Number.isInteger();判断是否为整数
+    console.log(Number.isInteger(0.9));//false
+    console.log(Number.isInteger(1));//true
+
+    //Number.parseInt(str);将字符串转化为相应的数值
+    console.log(Number.parseInt('123'));//123(类型为Number)
+
+    //Math.trunc(i); 直接去除小数部分
+    console.log(Math.trunc(1.23));//1
+
+    //n.toFixed();保留指定位数的小数
+    let num = 1.23;
+    console.log(num.toFixed(0));//为0时表示保留着整数
+    console.log(num.toFixed(1));//1.2
+
+    //n.toPrecision();保留指定位数（整数+小数），返回字符串  会四舍五入，位数不够时自动在末尾补0，不改变变量的值
+    console.log(num.toPrecision());//1.23 不指定默认保留全部
+    console.log(num.toPrecision(2));//1.2  
+    console.log(num.toPrecision(4));//1.230
+
+    //对象的扩展
+    //Object.is(v1,v2); 判断两个数据是否相等    是以字符串形式判断
+    console.log(Object.is(1, 2));//false
+    console.log(Object.is(2, 2));//true
+
+    //Object.assign();将源对象的属性复制到目标对象上
+
+    //for(let value of arr){};循环遍历
+
+    //Generator函数
+    function* testGenerator() {
+        yield 'hello';
+        yield 'world';
+        return 'end'
+    }
+    var hw = testGenerator();
+    hw.next();
+
+
+    //使用javascript访问设备摄像头
+    function isMediaDevices() {
+        if (
+            !"mediaDevices" in navigator &&
+            !"getUserMedia" in navigator.mediaDevices
+        ) {
+            alert('未监测到摄像头')
+        }
+    }
+    isMediaDevices()
+</script>
+
+</html>

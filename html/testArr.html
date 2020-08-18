@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算法集结</title>
+</head>
+
+<body>
+    <script>
+        //两个数组的交集
+        //第一种，存哈希表
+        const intersect = (nums1, nums2) => {
+            let map = {};
+            let res = [];
+            for (const num1 of nums1) {//存入nums1数组出现次数
+                if (map[num1]) {
+                    map[num1]++;
+                } else {
+                    map[num1] = 1;
+                }
+            }
+            for (const num2 of nums2) {//遍历nums2看有没有数字在nums1中出现
+                const val = map[num2];
+                if (val > 0) {//出现过
+                    res.push(num2);//存入数组
+                    map[num2]--;//匹配一个，就少一个
+                }
+            }
+            return res
+        }
+        let arr2 = [1, 2, 3, 4, 5, 6, 2, 6];
+        let arr1 = [2, 2, 6]
+        // console.log(intersect(arr1, arr2))
+        //第二种，循环遍历法
+        const intersect2 = (nums1, nums2) => {
+            //解构赋值，将nums1赋值为较短的数组
+            if (nums1.length < nums2.length) [nums1, nums2] = [nums2, nums1]
+            let result = [];
+            nums1.forEach(ele => {
+                //判断nums2中是否存在当前元素，indexOf方法会返回匹配到的第一个值的下标，没有返回-1
+                let key = nums2.indexOf(ele);
+                //如果匹配到，则删除nums2中这个元素，并将此元素放到结果中
+                if (key !== 1) {
+                    result.push(...nums2.splice(key, 1))
+                }
+            })
+            return result
+        }
+        console.log(intersect2(arr1, arr2))
+    </script>
+</body>
+
+</html>
